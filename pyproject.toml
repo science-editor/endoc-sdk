@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "endoc"
+version = "1.1.0"
+description = "Endoc SDK: A note-taking app SDK powered by LLMs"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Grigor Dochev", email = "gdochev@ethz.ch"},
+    {name = "Andreas Giannoutsos", email = "agiannoutsos@ethz.ch"}
+]
+urls = {Homepage = "https://github.com/science-editor/endoc-python-sdk"}
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "gql[requests]>=3.5.0"
+]

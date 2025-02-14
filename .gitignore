@@ -1,0 +1,80 @@
+# Byte-compiled files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+*.eggs
+
+# Distribution and packaging
+.Python
+build/
+dist/
+*.egg
+*.egg-info/
+pip-wheel-metadata/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environments
+.env
+.env.*
+*.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Other
+*.log
+*.bak
+*.swp
+*.tmp
+*.temp
+*.out
+*.pid
+
+# Editor-specific
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Wheel files
+*.whl
+
+# Security
+*.key
