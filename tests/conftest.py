@@ -1,0 +1,1 @@
+from tests.fixtures.document_search_fixtures import dummy_doc_search_service

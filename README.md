@@ -4,9 +4,10 @@
 
 <p align="center">
     <img src="https://img.shields.io/pypi/pyversions/endoc?logo=python&logoColor=%23ffd343&color=%23ffd343" />
-    <img src ="https://img.shields.io/pypi/l/endoc" />
-    <img src ="https://img.shields.io/pypi/v/endoc?logo=pypi&logoColor=%23ffd343&color=%23ffd343" />
-    <img src ="https://img.shields.io/pypi/dm/endoc?style=flat&color=red" />
+    <img src="https://img.shields.io/pypi/l/endoc" />
+    <img src="https://img.shields.io/pypi/v/endoc?logo=pypi&logoColor=%23ffd343&color=%23ffd343" />
+    <img src="https://img.shields.io/pypi/dm/endoc?style=flat&color=red" />
+    <img src="https://img.shields.io/pypi/dd/endoc" />
     <a href="https://endoc.ethz.ch">
         <img src="https://img.shields.io/badge/powered_by-Endoc-blue" alt="Powered by Endoc">
     </a>
