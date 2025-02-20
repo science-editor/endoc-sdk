@@ -197,6 +197,19 @@ endoc/
     ├── paginated_search.py
     ├── single_paper_search.py
     └── summarization.py
+tests/
+├── __init__.py
+├── conftest.py
+├── fixtures/
+│   ├── __init__.py
+│   ├── dummy_api.py
+│   └── document_search_fixtures.py
+├── integration/
+│   └── __init__.py
+└── unit/
+    ├── __init__.py
+    ├── test_document_search.py
+    └── test_custom_services.py
 ```
 
 ## Environment Variables
@@ -207,6 +220,43 @@ The SDK expects your API key as the environment variable API_KEY. Use a .env fil
 from dotenv import load_dotenv
 load_dotenv()
 ```
+
+## Testing
+
+Endoc SDK includes a test suite to ensure quality and maintain high coverage. The tests are organized by functionality, making it easy to add new tests or modify existing ones.
+
+- Make sure you have installed `pytest` and any other test dependencies:
+
+	```bash
+	pip install pytest
+	```
+
+### Running the Tests
+
+In the root of your project (the same directory containing `tests/`), run: `pytest`.
+
+### Test Organization
+
+#### Fixtures
+
+The `tests/fixtures` folder holds reusable components like mock responses and dummy clients (e.g., `dummy_api.py`).
+
+A document_search_fixtures.py file might contain fixtures that set up data or patch classes for document search tests.
+
+#### Unit Tests
+
+Located in `tests/unit`, these tests focus on individual modules or classes, mocking external calls.
+
+For example, `test_document_search.py` might ensure the `DocumentSearchService` parses JSON correctly.
+
+#### Integration Tests
+
+Placed in `tests/integration`, these tests cover how multiple parts of the SDK interact. They may call real endpoints in a staging environment or use more extensive mocks that simulate multi-step workflows.
+
+#### `conftest.py`
+
+Pytest automatically discovers and uses any fixtures defined in `conftest.py`.
+You can place shared fixtures here (like a global mock of your API client or environment setup).
 
 ## Contributing
 
