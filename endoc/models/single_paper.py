@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import List, Optional
 
 class Author(BaseModel):
@@ -11,6 +11,12 @@ class PublicationDate(BaseModel):
     Day: Optional[int] = None
     Name: Optional[str] = None
 
+    @field_validator("Year", "Month", "Day", mode="before")
+    def empty_str_to_none(cls, value):
+        if isinstance(value, str) and value.strip() == "":
+            return None
+        return value
+    
 class PaperID(BaseModel):
     collection: str
     id_field: str

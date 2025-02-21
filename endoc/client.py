@@ -4,10 +4,9 @@ import os
 
 class APIClient:
     def __init__(self, api_key):
-        url = os.getenv("GRAPHQL_URL")
         self.client = Client(
             transport = RequestsHTTPTransport(
-                url=url,
+                url="https://endoc.ethz.ch/graphql",
                 headers={'x-api-key': api_key}
             ),
             fetch_schema_from_transport=True,

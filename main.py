@@ -49,7 +49,7 @@ def demo_paginated_search():
 def demo_single_paper():
     print("\n=== Single Paper ===")
     # Replace with a valid paper ID if needed
-    single_paper_result = client.single_paper("221802394")
+    single_paper_result = client.single_paper("211268954")
     single_paper_dict = single_paper_result.model_dump() if hasattr(single_paper_result, "model_dump") else single_paper_result
     print(json.dumps(single_paper_dict, indent=4))
 
@@ -96,12 +96,12 @@ def main():
         return
 
     # Uncomment the demos you want to run:
-    demo_document_search()
-    demo_summarize_paper()
-    demo_paginated_search()
+    # demo_document_search()
+    # demo_summarize_paper()
+    # demo_paginated_search()
     demo_single_paper()
-    demo_note_library()
-    demo_custom_service()
+    # demo_note_library()
+    # demo_custom_service()
 
 if __name__ == "__main__":
     main()
