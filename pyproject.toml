@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "endoc"
-version = "1.4.1"
+version = "1.5.0"
 description = "Endoc SDK: A note-taking app SDK powered by LLMs"
 readme = "README.md"
 license = {text = "MIT"}

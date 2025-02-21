@@ -4,7 +4,7 @@ import os
 
 class APIClient:
     def __init__(self, api_key):
-        url = os.getenv("STAGING_GRAPHQL_URL")
+        url = os.getenv("GRAPHQL_URL")
         self.client = Client(
             transport = RequestsHTTPTransport(
                 url=url,

@@ -58,6 +58,7 @@ pip install endoc
      ```python
      from dotenv import load_dotenv
      load_dotenv()
+     api_key = os.getenv("API_KEY")
      ```
 
 4. **Instantiate the Endoc client**
