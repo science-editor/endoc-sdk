@@ -1,6 +1,5 @@
 from gql import Client
 from gql.transport.requests import RequestsHTTPTransport
-import os
 
 class APIClient:
     def __init__(self, api_key):
