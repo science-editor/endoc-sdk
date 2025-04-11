@@ -55,6 +55,14 @@ def mock_api_client():
                                     ],
                                     "type": {"kind": "OBJECT", "name": "SinglePaper"},
                                 },
+                                # Added: Summarization query
+                                {
+                                    "name": "summarizePaper",
+                                    "args": [
+                                        {"name": "paper_id", "type": {"kind": "INPUT_OBJECT", "name": "MetadataInput"}},
+                                    ],
+                                    "type": {"kind": "OBJECT", "name": "SummarizationResponse"},
+                                },
                             ],
                             "interfaces": [],
                         },
@@ -267,6 +275,29 @@ def mock_api_client():
                                 {"name": "id_field", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                                 {"name": "id_type", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                                 {"name": "id_value", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                            ],
+                            "interfaces": [],
+                        },
+                        # Summarization types (added)
+                        {
+                            "kind": "OBJECT",
+                            "name": "SummarizationResponse",
+                            "fields": [
+                                {"name": "status", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "message", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "response", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "SummarizationItem"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "SummarizationItem",
+                            "fields": [
+                                {"name": "paragraph_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "section_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "sentence_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "sentence_text", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "tag", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                             ],
                             "interfaces": [],
                         },
