@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 class DocumentSearchStats(BaseModel):
     DurationTotalSearch: float
@@ -20,4 +20,4 @@ class DocumentSearchResponseBody(BaseModel):
 class DocumentSearchData(BaseModel):
     status: str
     message: str
-    response: DocumentSearchResponseBody
+    response: Optional[DocumentSearchResponseBody] = None

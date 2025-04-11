@@ -99,11 +99,11 @@ def main():
 
     # Uncomment the demos you want to run:
     demo_document_search()
-    demo_summarize_paper()
-    demo_paginated_search()
-    demo_single_paper()
-    demo_note_library()
-    demo_custom_service()
+    # demo_summarize_paper()
+    # demo_paginated_search()
+    # demo_single_paper()
+    # demo_note_library()
+    # demo_custom_service()
 
 if __name__ == "__main__":
     main()
