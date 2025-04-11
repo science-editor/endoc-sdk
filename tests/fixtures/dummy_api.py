@@ -17,37 +17,12 @@ def mock_api_client():
                     "subscriptionType": None,
                     "types": [
                         # Standard GraphQL scalar types
-                        {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "fields": None,
-                            "interfaces": None,
-                        },
-                        {
-                            "kind": "SCALAR",
-                            "name": "Float",
-                            "fields": None,
-                            "interfaces": None,
-                        },
-                        {
-                            "kind": "SCALAR",
-                            "name": "Boolean",
-                            "fields": None,
-                            "interfaces": None,
-                        },
-                        {
-                            "kind": "SCALAR",
-                            "name": "Int",
-                            "fields": None,
-                            "interfaces": None,
-                        },
-                        {
-                            "kind": "SCALAR",
-                            "name": "ID",
-                            "fields": None,
-                            "interfaces": None,
-                        },
-                        # Custom types for documentSearch
+                        {"kind": "SCALAR", "name": "String", "fields": None, "interfaces": None},
+                        {"kind": "SCALAR", "name": "Float", "fields": None, "interfaces": None},
+                        {"kind": "SCALAR", "name": "Boolean", "fields": None, "interfaces": None},
+                        {"kind": "SCALAR", "name": "Int", "fields": None, "interfaces": None},
+                        {"kind": "SCALAR", "name": "ID", "fields": None, "interfaces": None},
+                        # Query type
                         {
                             "kind": "OBJECT",
                             "name": "Query",
@@ -64,25 +39,26 @@ def mock_api_client():
                                         {"name": "ranking_id_type", "type": {"kind": "SCALAR", "name": "String"}},
                                     ],
                                     "type": {"kind": "OBJECT", "name": "DocumentSearch"},
-                                }
+                                },
+                                {
+                                    "name": "paginatedSearch",
+                                    "args": [
+                                        {"name": "paper_list", "type": {"kind": "LIST", "ofType": {"kind": "INPUT_OBJECT", "name": "MetadataInput"}}},
+                                        {"name": "keywords", "type": {"kind": "LIST", "ofType": {"kind": "SCALAR", "name": "String"}}},
+                                    ],
+                                    "type": {"kind": "OBJECT", "name": "PaginatedSearch"},
+                                },
                             ],
                             "interfaces": [],
                         },
+                        # DocumentSearch types
                         {
                             "kind": "OBJECT",
                             "name": "DocumentSearch",
                             "fields": [
                                 {"name": "status", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                                 {"name": "message", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
-                                {
-                                    "name": "response",
-                                    "args": [],
-                                    "type": {
-                                        "kind": "OBJECT",
-                                        "name": "DocumentSearchResponse",
-                                        "ofType": None  # Indicates nullable
-                                    },
-                                },
+                                {"name": "response", "args": [], "type": {"kind": "OBJECT", "name": "DocumentSearchResponse", "ofType": None}},
                             ],
                             "interfaces": [],
                         },
@@ -117,7 +93,104 @@ def mock_api_client():
                             ],
                             "interfaces": [],
                         },
-                        # Add MetadataInput type
+                        # PaginatedSearch types
+                        {
+                            "kind": "OBJECT",
+                            "name": "PaginatedSearch",
+                            "fields": [
+                                {"name": "status", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "message", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "response", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "PaginatedSearchResponseBody"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "PaginatedSearchResponseBody",
+                            "fields": [
+                                {"name": "_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "DOI", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Content", "args": [], "type": {"kind": "OBJECT", "name": "Content"}},
+                                {"name": "Author", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "Author"}}},
+                                {"name": "Venue", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "PublicationDate", "args": [], "type": {"kind": "OBJECT", "name": "PublicationDate"}},
+                                {"name": "id_int", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "relevant_sentences", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "SCALAR", "name": "String"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "Content",
+                            "fields": [
+                                {"name": "Abstract", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Abstract_Parsed", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "AbstractParsedItem"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "AbstractParsedItem",
+                            "fields": [
+                                {"name": "section_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "section_title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "section_text", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "SectionText"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "SectionText",
+                            "fields": [
+                                {"name": "paragraph_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "paragraph_text", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "ParagraphText"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "ParagraphText",
+                            "fields": [
+                                {"name": "sentence_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "sentence_text", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "sentence_similarity", "args": [], "type": {"kind": "SCALAR", "name": "Float"}},
+                                {"name": "cite_spans", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "CiteSpan"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "CiteSpan",
+                            "fields": [
+                                {"name": "start", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "end", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "text", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "ref_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "Author",
+                            "fields": [
+                                {"name": "FamilyName", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "GivenName", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "PublicationDate",
+                            "fields": [
+                                {"name": "Year", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "Month", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "Day", "args": [], "type": {"kind": "SCALAR", "name": "Int", "ofType": None}},
+                                {"name": "Name", "args": [], "type": {"kind": "SCALAR", "name": "String", "ofType": None}},
+                            ],
+                            "interfaces": [],
+                        },
+                        # MetadataInput type
                         {
                             "kind": "INPUT_OBJECT",
                             "name": "MetadataInput",
@@ -127,7 +200,7 @@ def mock_api_client():
                                 {"name": "id_type", "type": {"kind": "SCALAR", "name": "String"}},
                                 {"name": "id_value", "type": {"kind": "SCALAR", "name": "String"}},
                             ],
-                            "interfaces": None,  # Input objects don’t have interfaces
+                            "interfaces": None,
                         },
                     ],
                     "directives": [

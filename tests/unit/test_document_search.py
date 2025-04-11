@@ -1,10 +1,8 @@
-import pytest
 from endoc.services.document_search import DocumentSearchService
 from endoc.models.document_search import DocumentSearchData
 
 def test_document_search_success(mock_api_client, mock_document_search_response):
     _, mocker = mock_api_client
-    # Mock the query response
     mocker.post(
         "https://endoc.ethz.ch/graphql",
         additional_matcher=lambda req: "documentSearch" in req.text,
@@ -22,7 +20,6 @@ def test_document_search_success(mock_api_client, mock_document_search_response)
 
 def test_document_search_empty(mock_api_client, mock_document_search_empty_response):
     _, mocker = mock_api_client
-    # Mock the query response
     mocker.post(
         "https://endoc.ethz.ch/graphql",
         additional_matcher=lambda req: "documentSearch" in req.text,

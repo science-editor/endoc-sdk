@@ -1,5 +1,4 @@
 from endoc import EndocClient, register_service
-from unittest.mock import Mock
 
 def test_register_service_decorator():
     client = EndocClient(api_key="fake-api-key")
@@ -11,8 +10,7 @@ def test_register_service_decorator():
     assert hasattr(client, "custom_test")
     assert client.custom_test() == "Hello, World!"
 
-def test_register_service_method(mock_api_client):
-    api_client, mocker = mock_api_client
+def test_register_service_method():
     client = EndocClient(api_key="fake-api-key")
     
     def custom_service():
@@ -22,16 +20,13 @@ def test_register_service_method(mock_api_client):
     assert client.custom_service() == "Custom Result"
 
 def test_custom_service_combined(mock_api_client, mock_document_search_response):
-    api_client, mocker = mock_api_client
-    # This test needs mocks for paginated_search and single_paper, which aren't provided
-    # Skipping execution of actual API calls by mocking a simplified response
+    _, mocker = mock_api_client
     mocker.post("https://endoc.ethz.ch/graphql", json=mock_document_search_response)
     
     client = EndocClient(api_key="fake-api-key")
     
     @register_service("combined_search")
     def combined_search(self, paper_list, id_value):
-        # Mock the internal calls to avoid actual execution
         return {
             "paginated": {"status": "SUCCESS", "mocked": True},
             "single": {"status": "SUCCESS", "mocked": True}
