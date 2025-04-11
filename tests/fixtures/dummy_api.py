@@ -48,6 +48,13 @@ def mock_api_client():
                                     ],
                                     "type": {"kind": "OBJECT", "name": "PaginatedSearch"},
                                 },
+                                {
+                                    "name": "singlePaper",
+                                    "args": [
+                                        {"name": "paper_id", "type": {"kind": "INPUT_OBJECT", "name": "MetadataInput"}},
+                                    ],
+                                    "type": {"kind": "OBJECT", "name": "SinglePaper"},
+                                },
                             ],
                             "interfaces": [],
                         },
@@ -120,6 +127,34 @@ def mock_api_client():
                             ],
                             "interfaces": [],
                         },
+                        # SinglePaper types
+                        {
+                            "kind": "OBJECT",
+                            "name": "SinglePaper",
+                            "fields": [
+                                {"name": "status", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "message", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "response", "args": [], "type": {"kind": "OBJECT", "name": "SinglePaperResponseBody", "ofType": None}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "SinglePaperResponseBody",
+                            "fields": [
+                                {"name": "_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "id_int", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
+                                {"name": "DOI", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Content", "args": [], "type": {"kind": "OBJECT", "name": "SinglePaperContent"}},
+                                {"name": "Author", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "Author"}}},
+                                {"name": "Venue", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "PublicationDate", "args": [], "type": {"kind": "OBJECT", "name": "PublicationDate"}},
+                                {"name": "Reference", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "PaperReference"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        # Shared types
                         {
                             "kind": "OBJECT",
                             "name": "Content",
@@ -131,7 +166,28 @@ def mock_api_client():
                         },
                         {
                             "kind": "OBJECT",
+                            "name": "SinglePaperContent",
+                            "fields": [
+                                {"name": "Abstract", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Abstract_Parsed", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "AbstractParsedItem"}}},
+                                {"name": "Fullbody_Parsed", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "FullbodyParsedItem"}}},
+                                {"name": "Fullbody", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
                             "name": "AbstractParsedItem",
+                            "fields": [
+                                {"name": "section_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "section_title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "section_text", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "SectionText"}}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "FullbodyParsedItem",
                             "fields": [
                                 {"name": "section_id", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                                 {"name": "section_title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
@@ -187,6 +243,30 @@ def mock_api_client():
                                 {"name": "Month", "args": [], "type": {"kind": "SCALAR", "name": "Int"}},
                                 {"name": "Day", "args": [], "type": {"kind": "SCALAR", "name": "Int", "ofType": None}},
                                 {"name": "Name", "args": [], "type": {"kind": "SCALAR", "name": "String", "ofType": None}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "PaperReference",
+                            "fields": [
+                                {"name": "Title", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "Author", "args": [], "type": {"kind": "LIST", "ofType": {"kind": "OBJECT", "name": "Author"}}},
+                                {"name": "Venue", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "PublicationDate", "args": [], "type": {"kind": "OBJECT", "name": "PublicationDate"}},
+                                {"name": "ReferenceText", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "PaperID", "args": [], "type": {"kind": "OBJECT", "name": "PaperID", "ofType": None}},
+                            ],
+                            "interfaces": [],
+                        },
+                        {
+                            "kind": "OBJECT",
+                            "name": "PaperID",
+                            "fields": [
+                                {"name": "collection", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "id_field", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "id_type", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
+                                {"name": "id_value", "args": [], "type": {"kind": "SCALAR", "name": "String"}},
                             ],
                             "interfaces": [],
                         },

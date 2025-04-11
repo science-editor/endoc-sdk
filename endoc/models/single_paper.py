@@ -51,4 +51,4 @@ class SinglePaperResponseBody(BaseModel):
 class SinglePaperData(BaseModel):
     status: str
     message: str
-    response: SinglePaperResponseBody
+    response: Optional[SinglePaperResponseBody] = None
