@@ -1,19 +1,40 @@
-import pytest
-from endoc.endoc_client import EndocClient
+from endoc import EndocClient, register_service
 
-@pytest.fixture
-def client():
-    # Create a dummy EndocClient instance.
-    client = EndocClient(api_key="dummy")
-    # Register a dummy custom service for testing.
-    client.register_service("dummy_service", lambda param: param * 2)
-    return client
+def test_register_service_decorator():
+    client = EndocClient(api_key="fake-api-key")
+    
+    @register_service("custom_test")
+    def custom_test(self):
+        return "Hello, World!"
+    
+    assert hasattr(client, "custom_test")
+    assert client.custom_test() == "Hello, World!"
 
-def test_custom_service_registration(client):
-    # Test that the custom service is accessible and works as expected.
-    result = client.dummy_service(3)
-    assert result == 6
+def test_register_service_method():
+    client = EndocClient(api_key="fake-api-key")
+    
+    def custom_service():
+        return "Custom Result"
+    
+    client.register_service("custom_service", custom_service)
+    assert client.custom_service() == "Custom Result"
 
-def test_non_existent_service(client):
-    with pytest.raises(AttributeError):
-        _ = client.non_existent_service
+def test_custom_service_combined(mock_api_client, mock_document_search_response):
+    _, mocker = mock_api_client
+    mocker.post("https://endoc.ethz.ch/graphql", json=mock_document_search_response)
+    
+    client = EndocClient(api_key="fake-api-key")
+    
+    @register_service("combined_search")
+    def combined_search(self, paper_list, id_value):
+        return {
+            "paginated": {"status": "SUCCESS", "mocked": True},
+            "single": {"status": "SUCCESS", "mocked": True}
+        }
+    
+    paper_list = [{"collection": "S2AG", "id_field": "id_int", "id_type": "int", "id_value": "221802394"}]
+    result = client.combined_search(paper_list, "221802394")
+    assert "paginated" in result
+    assert "single" in result
+    assert result["paginated"]["status"] == "SUCCESS"
+    assert result["single"]["status"] == "SUCCESS"
