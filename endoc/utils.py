@@ -7,7 +7,7 @@ def is_auth_error_message(message: str) -> bool:
     return any(
         kw in msg_l
         for kw in (
-            "unauth",           # unauthenticated / unauthorized
+            "unauth",
             "invalid api key",
             "missing api key",
             "expired api key",
