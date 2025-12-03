@@ -205,3 +205,24 @@ query getNoteLibrary($doc_id: String!) {
     }
 }
 """)
+
+TITLE_SEARCH_QUERY = gql("""
+query titleSearch($titles: [String]!) {
+  titleSearch(titles: $titles) {
+    status
+    message
+    response {
+      Title
+      collection
+      found
+      id_field
+      id_type
+      id_value
+      Author {
+        FamilyName
+        GivenName
+      }
+    }
+  }
+}
+""")

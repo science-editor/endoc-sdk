@@ -1,0 +1,90 @@
+{
+  "collection_key": "QDVXRUA9",
+  "collection_path": "Master's Thesis",
+  "recursive": false,
+  "total_items_parent_only": 10,
+  "unique_titles": 10,
+  "matched": 6,
+  "records": [
+    {
+      "title": "OpenAlex: A fully-open index of scholarly works, authors, venues, institutions, and concepts",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "248512771"
+    },
+    {
+      "title": "Content‐Enhanced Network Embedding for Academic Collaborator Recommendation",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "232284020"
+    },
+    {
+      "title": "A Recommender for Research Collaborators Using Graph Neural Networks",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "251201580"
+    },
+    {
+      "title": "A BERT Based Hybrid Recommendation System For Academic Collaboration",
+      "found": false,
+      "collection": null,
+      "id_field": null,
+      "id_type": null,
+      "id_value": null
+    },
+    {
+      "title": "Context-aware Academic Collaborator Recommendation",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "50771526"
+    },
+    {
+      "title": "HNERec: Scientific collaborator recommendation model based on heterogeneous network embedding",
+      "found": false,
+      "collection": null,
+      "id_field": null,
+      "id_type": null,
+      "id_value": null
+    },
+    {
+      "title": "Academic Collaborator Recommendation Based on Attributed Network Embedding",
+      "found": false,
+      "collection": null,
+      "id_field": null,
+      "id_type": null,
+      "id_value": null
+    },
+    {
+      "title": "TNERec: Topic-Aware Network Embedding for Scientific Collaborator Recommendation",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "54449143"
+    },
+    {
+      "title": "Scholarly recommendation system for NIH funded grants based on biomedical word embedding models",
+      "found": false,
+      "collection": null,
+      "id_field": null,
+      "id_type": null,
+      "id_value": null
+    },
+    {
+      "title": "Graph Embedding for Scholar Recommendation in Academic Social Networks",
+      "found": true,
+      "collection": "S2AG",
+      "id_field": "id_int",
+      "id_type": "int",
+      "id_value": "244732978"
+    }
+  ]
+}
