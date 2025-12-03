@@ -3,6 +3,7 @@ from .services.paginated_search import PaginatedSearchService
 from .services.summarization import SummarizationService
 from .services.single_paper_search import SinglePaperSearchService
 from .services.get_note_library import GetNoteLibraryService
+from .services.title_search import TitleSearchService
 
 class EndocClient:
     def __init__(self, api_key: str):
@@ -11,6 +12,7 @@ class EndocClient:
         self._paginated_search_service = PaginatedSearchService(api_key)
         self._single_paper_service = SinglePaperSearchService(api_key)
         self._get_note_library_service = GetNoteLibraryService(api_key)
+        self._title_search_service = TitleSearchService(api_key)
         self._custom_services = {}
 
     def summarize(self, id_value: str):
@@ -37,3 +39,6 @@ class EndocClient:
         if name in self._custom_services:
             return self._custom_services[name]
         raise AttributeError(f"'EndocClient' object has no attribute '{name}'")
+
+    def title_search(self, titles):
+        return self._title_search_service.title_search(titles)
