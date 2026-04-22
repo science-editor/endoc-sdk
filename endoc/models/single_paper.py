@@ -39,8 +39,8 @@ class SinglePaperContent(BaseModel):
 
 class SinglePaperResponseBody(BaseModel):
     _id: str
-    id_int: int
-    DOI: str
+    id_int: Optional[int] = None
+    DOI: Optional[str] = ""
     Title: str
     Content: SinglePaperContent
     Author: List[Author]

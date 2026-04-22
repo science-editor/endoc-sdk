@@ -7,6 +7,7 @@ from .exceptions import (
     RateLimitError,
     APIError,
 )
+from .models.pdf_import import ImportResult, ImportedPaper, ImportedBookmark
 
 __all__ = [
     "EndocClient",
@@ -16,4 +17,7 @@ __all__ = [
     "PermissionError",
     "RateLimitError",
     "APIError",
+    "ImportResult",
+    "ImportedPaper",
+    "ImportedBookmark",
 ]

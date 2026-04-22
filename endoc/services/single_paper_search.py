@@ -6,13 +6,19 @@ class SinglePaperSearchService:
     def __init__(self, api_key):
         self.client = APIClient(api_key)
 
-    def get_single_paper(self, id_value):
+    def get_single_paper(
+        self,
+        id_value,
+        collection="S2AG",
+        id_field="id_int",
+        id_type="int",
+    ):
         variable_values = {
             "paper_id": {
-                "collection": "S2AG",
-                "id_field": "id_int",
-                "id_type": "int",
-                "id_value": id_value
+                "collection": collection,
+                "id_field": id_field,
+                "id_type": id_type,
+                "id_value": id_value,
             }
         }
         raw_result = self.client.execute_query(SINGLE_PAPER_QUERY, variable_values)
