@@ -24,6 +24,8 @@ Endoc SDK is a Python library that provides powerful tools for advanced paper se
 - **Paginated Search:** Retrieve paginated search results.
 - **Single Paper Search:** Get detailed information about a single paper.
 - **Note Library:** Retrieve papers associated with a note.
+- **Title Search:** Resolve papers from title lists.
+- **PDF Import (API key flow):** Upload local PDFs for indexing/import.
 - **Custom Services:** Easily extend the client with your own functions.
 
 ## Installation
@@ -42,29 +44,40 @@ pip install endoc
    - Under the **Developer API** section, click **Generate** to create a new API key.
    - Copy the generated API key for later use.
 
-2. **Create a `.env` File:**
+2. **Create a `.env` File (optional):**
    - In your project's root directory, create a file named `.env`.
-   - Add your API key to the file using the following format:
+   - Add your API key to the file using one of these supported keys:
      ```
+     ENDOC_API_KEY=your_api_key_here
+     # or
      API_KEY=your_api_key_here
      ```
 
-3. **Load Environment Variables:**
+3. **Load Environment Variables (if using `.env`):**
    - Install [python-dotenv](https://pypi.org/project/python-dotenv/) if you haven't already:
      ```bash
      pip install python-dotenv
      ```
-   - In your Python script, load the environment variables at the very start:
+   - In your Python script:
      ```python
      from dotenv import load_dotenv
      load_dotenv()
-     api_key = os.getenv("API_KEY")
      ```
 
 4. **Instantiate the Endoc client**
-    - In your Python script, instantiate a new instance of the `EndocClient`:
+    - In your Python script, instantiate `EndocClient`:
     ```python
-     client = EndocClient(api_key)
+    client = EndocClient(api_key=None)  # reads ENDOC_API_KEY/API_KEY from env
+    # or
+    client = EndocClient(api_key="your_api_key_here")
+    ```
+
+5. **(Optional) Override GraphQL endpoint**
+   - By default the SDK uses:
+     `https://endoc.ethz.ch/graphql`
+   - To target another deployment (e.g. local gateway), set:
+     ```
+     ENDOC_GRAPHQL_URL=http://localhost:9000/graphql
      ```
 
 ## Basic Usage
@@ -133,6 +146,26 @@ if note_library_result.response:
     print(note_library_result.response[0].id_value)
 ```
 
+### 6) Import PDFs from local folder
+
+```python
+result_batches = client.import_pdfs_from_folder(
+    folder_path="/absolute/path/to/pdfs",
+    recursive=False,
+    max_file_mb=50,
+    batch_size=5,
+)
+
+for batch in result_batches:
+    print(batch.status, batch.message, len(batch.response or []))
+```
+
+Or use the example script:
+
+```bash
+python examples/upload_pdf.py --folder "/absolute/path/to/pdfs"
+```
+
 ## Extending the Client with Custom Services
 
 Endoc SDK allows you to add your own composite services without modifying the core code. You have two options:
@@ -178,44 +211,50 @@ The package is organized as follows:
 endoc/
 ├── __init__.py
 ├── client.py
-├── endoc_client.py
 ├── decorators.py
-├── queries/
-│   ├── document_search_query.py
-│   ├── get_note_library_query.py
-│   ├── paginated_search_query.py
-│   ├── single_paper_query.py
-│   └── summarize_paper_query.py
+├── endoc_client.py
+├── exceptions.py
+├── queries.py
 ├── models/
 │   ├── document_search.py
 │   ├── note_library.py
 │   ├── paginated_search.py
+│   ├── pdf_import.py
 │   ├── single_paper.py
-│   └── summarization.py
+│   ├── summarization.py
+│   └── title_search.py
 └── services/
     ├── document_search.py
     ├── get_note_library.py
     ├── paginated_search.py
+    ├── pdf_import.py
     ├── single_paper_search.py
-    └── summarization.py
+    ├── summarization.py
+    └── title_search.py
+examples/
+├── test_document_search.py
+└── upload_pdf.py
 tests/
-├── __init__.py
 ├── conftest.py
 ├── fixtures/
-│   ├── __init__.py
-│   ├── dummy_api.py
-│   └── document_search_fixtures.py
-├── integration/
-│   └── __init__.py
 └── unit/
-    ├── __init__.py
+    ├── test_auth.py
+    ├── test_custom_services.py
     ├── test_document_search.py
-    └── test_custom_services.py
+    ├── test_paginated_search.py
+    ├── test_pdf_import.py
+    ├── test_single_paper.py
+    └── test_summarization.py
 ```
 
 ## Environment Variables
 
-The SDK expects your API key as the environment variable API_KEY. Use a .env file and python-dotenv to load the variable:
+Supported variables:
+
+- `ENDOC_API_KEY` or `API_KEY`: API key used by the SDK.
+- `ENDOC_GRAPHQL_URL` (optional): override default endpoint (`https://endoc.ethz.ch/graphql`).
+
+Use a `.env` file and `python-dotenv` to load variables:
 
 ```python
 from dotenv import load_dotenv
@@ -234,7 +273,11 @@ Endoc SDK includes a test suite to ensure quality and maintain high coverage. Th
 
 ### Running the Tests
 
-In the root of your project (the same directory containing `tests/`), run: `pytest`.
+In the SDK root (`endoc-sdk/`), run:
+
+```bash
+python -m pytest
+```
 
 ### Test Organization
 
