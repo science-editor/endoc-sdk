@@ -33,15 +33,13 @@ from .exceptions import (
 )
 from .utils import raise_for_domain_errors
 
-GRAPHQL_URL = "https://endoc.ethz.ch/graphql"
 DEFAULT_TIMEOUT = 30  # seconds
 
 VALIDATE_QUERY = gql("""
 query Validate {
-  documentSearch {
+  authenticateKey {
     status
     message
-    response { __typename }  # tiny payload; unused
   }
 }
 """)
@@ -91,12 +89,19 @@ class APIClient:
         if not key:
             raise AuthenticationError("No API key provided. Set ENDOC_API_KEY or pass api_key=...")
 
+        graphql_url = (
+            os.getenv("ENDOC_GRAPHQL_URL")
+            or os.getenv("STAGING_GRAPHQL_URL")
+            or os.getenv("PROD_GRAPHQL_URL")
+            or "https://endoc.ethz.ch/graphql"
+        )
+
         headers = {"x-api-key": key}
         if user_agent:
             headers["User-Agent"] = user_agent
 
         self.transport = RequestsHTTPTransport(
-            url=GRAPHQL_URL,
+            url=graphql_url,
             headers=headers,
             use_json=True,
             timeout=timeout,
@@ -114,7 +119,7 @@ class APIClient:
     def _validate_api_key(self) -> None:
         try:
             data = self.client.execute(VALIDATE_QUERY)
-            block = data.get("documentSearch") if isinstance(data, dict) else None
+            block = data.get("authenticateKey") if isinstance(data, dict) else None
 
             if isinstance(block, dict):
                 status = (block.get("status") or "").strip().lower()
@@ -127,6 +132,8 @@ class APIClient:
 
             return
 
+        except (AuthenticationError, PermissionError, RateLimitError, APIError):
+            raise
         except TransportServerError as e:
             _map_http_transport_error(e)
         except TransportQueryError as e:
@@ -136,12 +143,17 @@ class APIClient:
 
     def execute_query(self, query, variable_values: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         try:
-            result = self.client.execute(query, variable_values or {})
+            result = self.client.execute(
+                query,
+                variable_values=variable_values or {},
+            )
             if isinstance(result, dict):
                 for _, block in result.items():
                     if isinstance(block, dict) and ("status" in block or "message" in block):
                         raise_for_domain_errors(block)
             return result
+        except (AuthenticationError, PermissionError, RateLimitError, APIError):
+            raise
         except TransportServerError as e:
             _map_http_transport_error(e)
         except TransportQueryError as e:
