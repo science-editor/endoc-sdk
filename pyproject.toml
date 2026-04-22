@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "endoc"
-version = "1.7.0"
+version = "1.8.0"
 description = "Endoc SDK: A note-taking app SDK powered by LLMs"
 readme = "README.md"
 license = {text = "MIT"}
@@ -24,5 +24,10 @@ classifiers = [
     "Operating System :: OS Independent"
 ]
 dependencies = [
-    "gql[requests]>=3.5.0"
+    "gql[requests]>=3.5.0",
+    "pydantic>=1.10"
 ]
+
+[tool.setuptools.packages.find]
+include = ["endoc*"]
+exclude = ["examples*", "tests*", "Papers*"]

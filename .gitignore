@@ -78,3 +78,8 @@ ehthumbs.db
 
 # Security
 *.key
+
+# Test PDFs, examples, and build releases
+Papers/
+examples/
+dist-release/

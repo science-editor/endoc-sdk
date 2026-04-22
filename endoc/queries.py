@@ -226,3 +226,19 @@ query titleSearch($titles: [String]!) {
   }
 }
 """)
+
+IMPORT_PDF_WITH_API_KEY_MUTATION = gql("""
+mutation importPDFWithAPIKey($base64list: [String!]!) {
+  importPDFWithAPIKey(base64list: $base64list) {
+    status
+    message
+    response {
+      _id
+      id_value
+      id_field
+      id_type
+      id_collection
+    }
+  }
+}
+""")
