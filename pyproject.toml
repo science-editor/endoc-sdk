@@ -30,3 +30,4 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 include = ["endoc*"]
+exclude = ["examples*", "tests*", "Papers*"]
